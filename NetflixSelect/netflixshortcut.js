@@ -148,31 +148,6 @@ const AREA_TEST_FILM_ID = 80018499
     while (allGroup.includes(rootName) == true) {
       rootName = (await httpAPI("/v1/policy_groups/select?group_name=" + encodeURIComponent(rootName) + "")).policy;
     }
-    
-    /**
-    * 面板显示
-    */
-
-    let title = "Netflix ➟ " + rootName;
-
-    let panel = {
-       title: `${title}`,
-    }
-
-    if (fullUnlock.includes(rootName)) {
-       panel['content'] = `完整支持Netflix  地区：${data[rootName]}`
-       panel['icon'] = params.icon1
-       panel['icon-color'] = params.color1
-    } else if (onlyOriginal.includes(rootName)) {
-       panel['content'] = `仅支持自制内容`
-       panel['icon'] = params.icon2
-       panel['icon-color'] = params.color2
-    } else {
-       console.log("test")
-       panel['content'] = `没有找到可用的节点`
-       panel['icon'] = params.icon3
-       panel['icon-color'] = params.color3
-    }
 
     let info
     if (newStatus === 2) {
