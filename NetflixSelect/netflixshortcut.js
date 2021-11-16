@@ -132,8 +132,6 @@ const AREA_TEST_FILM_ID = 80018499
       if (selectList.length > 0) $surge.setSelectGroupPolicy(groupName, selectList[0]);
 
 
-
-
       // 创建持久化数据
 
       $persistentStore.write(fullUnlock.toString(), "FULLUNLOCK");
@@ -150,7 +148,31 @@ const AREA_TEST_FILM_ID = 80018499
     while (allGroup.includes(rootName) == true) {
       rootName = (await httpAPI("/v1/policy_groups/select?group_name=" + encodeURIComponent(rootName) + "")).policy;
     }
+    
+    /**
+    * 面板显示
+    */
 
+    let title = "Netflix ➟ " + rootName;
+
+    let panel = {
+       title: `${title}`,
+    }
+
+    if (fullUnlock.includes(rootName)) {
+       panel['content'] = `完整支持Netflix  地区：${data[rootName]}`
+       panel['icon'] = params.icon1
+       panel['icon-color'] = params.color1
+    } else if (onlyOriginal.includes(rootName)) {
+       panel['content'] = `仅支持自制内容`
+       panel['icon'] = params.icon2
+       panel['icon-color'] = params.color2
+    } else {
+       console.log("test")
+       panel['content'] = `没有找到可用的节点`
+       panel['icon'] = params.icon3
+       panel['icon-color'] = params.color3
+    }
 
     let info
     if (newStatus === 2) {
@@ -158,10 +180,10 @@ const AREA_TEST_FILM_ID = 80018499
     } else if (newStatus === 1) {
       info = `已选定节点： ${rootName} | ${statusName(newStatus)}`
     } else {
-      info = "该策略组暂无可供支援的节点"
+      info = "该策略组暂无可用的节点"
     }
 
-    $notification.post("Netflix檢測", info, "")
+    $notification.post("Netflix检测", info, "")
 
     $done()
 

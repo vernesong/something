@@ -144,6 +144,32 @@ const STATUS_ERROR = -2
     while (allGroup.includes(rootName) == true) {
       rootName = (await httpAPI("/v1/policy_groups/select?group_name=" + encodeURIComponent(rootName) + "")).policy;
     }
+    
+
+    /**
+    * 面板显示
+    */
+
+    let title = "Disney+ ➟ " + rootName;
+
+    let panel = {
+      title: `${title}`,
+    }
+    if (statusData[rootName] == 1) {
+      panel['content'] = `支持Disney+，区域：${regData[rootName]}`
+      panel['icon'] = params.icon1
+      panel['icon-color'] = params.color1
+    } else if (statusData[rootName] == 2) {
+      panel['content'] = `即将登陆 敬请期待`
+      panel['icon'] = params.icon2
+      panel['icon-color'] = params.color2
+    } else {
+      $surge.setSelectGroupPolicy(disneyGroup, first);
+      panel['content'] = `没有找到可用的节点`
+      panel['icon'] = params.icon3
+      panel['icon-color'] = params.color3
+      return
+    }
 
     let info
     if (newStatus === 1) {
@@ -151,10 +177,10 @@ const STATUS_ERROR = -2
     } else if (statusData[rootName] == 2) {
       info = `该地区即将上线 敬请期待哦～`
     } else {
-      info = "该策略组暂无可供支援的节点"
+      info = "该策略组暂无可用的节点"
     }
 
-    $notification.post("Disney檢測", info, "")
+    $notification.post("Disney检测", info, "")
 
 
     $done()
