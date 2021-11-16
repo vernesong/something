@@ -177,7 +177,7 @@ const AREA_TEST_FILM_ID = 80018499
       }
     }
 
-    $done()
+    $done(panel)
 
   })();
 
