@@ -132,8 +132,6 @@ const AREA_TEST_FILM_ID = 80018499
       if (selectList.length > 0) $surge.setSelectGroupPolicy(groupName, selectList[0]);
 
 
-
-
       // 创建持久化数据
 
       $persistentStore.write(fullUnlock.toString(), "FULLUNLOCK");
@@ -180,12 +178,6 @@ const AREA_TEST_FILM_ID = 80018499
     $done()
 
   })();
-
-
-function setPanel(netflixGroup,fullUnlock) {
-	
-}
-
 
 function httpAPI(path = "", method = "GET", body = null) {
   return new Promise((resolve) => {
