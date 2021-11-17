@@ -61,9 +61,7 @@ const AREA_TEST_FILM_ID = 80018499
       var selectName = []
       let select = proxy["" + groupName + ""];
       for (let i = 0; i < select.length; ++i) {
-        if (allGroup.includes(select[i].name) == false) {
-    	    selectName.push(select[i].name);
-        };
+        selectName.push(select[i].name);
       }
       //去除历史数据
       for (let i = 0; i < selectName.length; ++i) {
