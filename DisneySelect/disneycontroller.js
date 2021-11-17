@@ -164,8 +164,9 @@ const STATUS_ERROR = -2
     let panel = {
       title: `${title}`,
     }
+
     if (statusData[rootName] == 1) {
-      panel['content'] = `支持Disney+，区域：${regData[rootName]}`
+      panel['content'] = `支持Disney+ 地区：${regData[rootName]}`
       panel['icon'] = params.icon1
       panel['icon-color'] = params.color1
     } else if (statusData[rootName] == 2) {
@@ -173,11 +174,9 @@ const STATUS_ERROR = -2
       panel['icon'] = params.icon2
       panel['icon-color'] = params.color2
     } else {
-      $surge.setSelectGroupPolicy(disneyGroup, first);
       panel['content'] = `没有找到可用的节点`
       panel['icon'] = params.icon3
       panel['icon-color'] = params.color3
-      return
     }
 
     $done(panel)
@@ -189,10 +188,7 @@ async function testDisneyPlus() {
   try {
     let { region, cnbl } = await Promise.race([testHomePage(), timeout(3000)])
 
-
-
-    let { countryCode, inSupportedLocation } = await Promise.race([getLocationInfo(), timeout(1000)])
-
+    let { countryCode, inSupportedLocation, accessToken } = await Promise.race([getLocationInfo(), timeout(3000)])
 
     region = countryCode ?? region
     // 即将登陆
@@ -200,6 +196,10 @@ async function testDisneyPlus() {
       return { region, status: STATUS_COMING }
     }
 
+    let support = await Promise.race([testPublicGraphqlAPI(accessToken), timeout(3000)])
+    if (!support) {
+      return { status: STATUS_NOT_AVAILABLE }
+    }
     // 支持解锁
     return { region, status: STATUS_AVAILABLE }
   } catch (error) {
@@ -219,7 +219,32 @@ async function testDisneyPlus() {
   }
 }
 
+function testPublicGraphqlAPI(accessToken) {
+  return new Promise((resolve, reject) => {
+    let opts = {
+      url: 'https://disney.api.edge.bamgrid.com/v1/public/graphql',
+      headers: {
+        'Accept-Language': 'en',
+        Authorization: accessToken,
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
+      },
+      body: JSON.stringify({
+        query:
+          'query($preferredLanguages: [String!]!, $version: String) {globalization(version: $version) { uiLanguage(preferredLanguages: $preferredLanguages) }}',
+        variables: { version: '1.5.0', preferredLanguages: ['en'] },
+      }),
+    }
 
+    $httpClient.post(opts, function (error, response, data) {
+      if (error) {
+        reject('Error')
+        return
+      }
+      resolve(response.status === 200)
+    })
+  })
+}
 
 function getLocationInfo() {
   return new Promise((resolve, reject) => {
@@ -239,15 +264,15 @@ function getLocationInfo() {
             attributes: {
               browserName: 'chrome',
               browserVersion: '94.0.4606',
-              manufacturer: 'microsoft',
+              manufacturer: 'apple',
               model: null,
-              operatingSystem: 'windows',
-              operatingSystemVersion: '10.0',
+              operatingSystem: 'macintosh',
+              operatingSystemVersion: '10.15.7',
               osDeviceIds: [],
             },
             deviceFamily: 'browser',
             deviceLanguage: 'en',
-            deviceProfile: 'windows',
+            deviceProfile: 'macosx',
           },
         },
       }),
@@ -265,10 +290,13 @@ function getLocationInfo() {
       }
 
       let {
-        inSupportedLocation,
-        location: { countryCode },
-      } = JSON.parse(data)?.extensions?.sdk?.session
-      resolve({ inSupportedLocation, countryCode })
+        token: { accessToken },
+        session: {
+          inSupportedLocation,
+          location: { countryCode },
+        },
+      } = JSON.parse(data)?.extensions?.sdk
+      resolve({ inSupportedLocation, countryCode, accessToken })
     })
   })
 }

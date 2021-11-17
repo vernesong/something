@@ -41,10 +41,9 @@ index=i
 if($trigger == "button"){
 index += 1;
 
-if(index>arr.length-1){
+if(index > arr.length-1){
 	index = 0;
 	}
-$surge.setSelectGroupPolicy(group, proxyName[index]);
 
 };
 
@@ -61,7 +60,7 @@ while(allGroup.includes(rootName)==true){
 }
 
 if(arr[index].isGroup==true && secondName!= rootName){
-name=name + ' ➟ ' + rootName;
+name = name + ' ➟ ' + rootName;
 }
 
     $done({

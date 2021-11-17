@@ -185,7 +185,7 @@ const AREA_TEST_FILM_ID = 80018499
       panel['icon-color'] = params.color3
     }
 
-    $done()
+    $done(panel)
 
   })();
 
