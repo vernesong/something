@@ -30,7 +30,7 @@ for (let i = 0; i < arr.length; ++i) {
 proxyName.push(arr[i].name);
 }
 
-let index;
+let index=0;
 
 for(let i = 0;i < proxyName.length; ++i) {
 	if(groupName==proxyName[i]){
@@ -39,12 +39,11 @@ index=i
 };
 
 if($trigger == "button"){
-index += 1;
-
-if(index > arr.length-1){
-	index = 0;
+for(let i = 0;i < proxyName.length; ++i) {
+	if(groupName==proxyName[i]){
+index=i
 	}
-
+}
 };
 
 let name =proxyName[index];
