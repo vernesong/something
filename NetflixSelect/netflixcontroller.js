@@ -70,7 +70,9 @@ let params = getParams($argument)
   var selectName = []
   let select = proxy["" + groupName + ""];
   for (let i = 0; i < select.length; ++i) {
-    selectName.push(select[i].name);
+    if (allGroup.includes(select[i].name) == false) {
+    	selectName.push(select[i].name);
+    };
   }
 
   for (let i = 0; i < selectName.length; ++i) {
