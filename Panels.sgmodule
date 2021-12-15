@@ -56,7 +56,7 @@ NetflixChecker = type=cron,cronexp=0/30 * * * *,wake-system=0,timeout=3600,scrip
 #捷径执行
 NetflixShortcut = type=cron,cronexp=5 * 31 1 2000,wake-system=0,timeout=3600,script-path=https://raw.githubusercontent.com/vernesong/something/main/NetflixSelect/netflixshortcut.js,script-update-interval=86400,control-api=1
 
-ytb_check = type=generic, timeout=5, script-path=https://gist.githubusercontent.com/Hyseen/5ae36a6a5cb5690b1f2bff4aa19c766f/raw/youtube_premium_check.js, argument=availableIcon=checkmark.circle&availableIconColor=55ba94&notAvailableIcon=checkmark.circle.trianglebadge.exclamationmark&notAvailableIconColor=#9a9ced&errorIcon=hand.raised.circle&errorIconColor=#ea5532
+ytb_check = type=cron, cronexp=0/30 * * * *, wake-system=0, timeout=5, script-path=https://gist.githubusercontent.com/Hyseen/5ae36a6a5cb5690b1f2bff4aa19c766f/raw/youtube_premium_check.js, argument=availableIcon=checkmark.circle&availableIconColor=55ba94&notAvailableIcon=checkmark.circle.trianglebadge.exclamationmark&notAvailableIconColor=#9a9ced&errorIcon=hand.raised.circle&errorIconColor=#ea5532
 
 #策略组面板 可重复配置 注意修改相应字段
 #必须更改的字段：group 填写需要显示的策略组名称
