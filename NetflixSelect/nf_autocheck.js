@@ -5,7 +5,7 @@
  3:本脚本与姊妹脚本nf_autoselect相互依赖，你应当优先执行一次panel脚本，且必须手动运行一次本脚本以获取节点列表
 */
 
-const FILM_ID = 81215567
+const FILM_ID = 70143836
 const AREA_TEST_FILM_ID = 80018499
 
 

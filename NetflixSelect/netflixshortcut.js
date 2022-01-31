@@ -2,7 +2,7 @@
 脚本说明：https://github.com/fishingworld/something/blob/main/NetflixSelect/README.md
 */
 
-const FILM_ID = 81215567
+const FILM_ID = 70143836
 const AREA_TEST_FILM_ID = 80018499
 
 
