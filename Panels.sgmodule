@@ -23,8 +23,8 @@ DisneyController = script-name=DisneyController, update-interval=600
 #Netflix策略组自动控制
 NetflixController = script-name=NetflixController, update-interval=600
 
-#Youtube Premium 解锁检测
-ytb_check = script-name=ytb_check, title="YouTube Premium 解锁检测", update-interval=10
+#Youtube Premium策略组自动控制
+YouTubeController = script-name=YouTubeController, update-interval=600
 
 
 [Script]
@@ -56,7 +56,12 @@ NetflixChecker = type=cron,cronexp=0/30 * * * *,wake-system=0,timeout=3600,scrip
 #捷径执行
 NetflixShortcut = type=cron,cronexp=5 * 31 1 2000,wake-system=0,timeout=3600,script-path=https://raw.githubusercontent.com/vernesong/something/main/NetflixSelect/netflixshortcut.js,script-update-interval=86400,control-api=1
 
-ytb_check = type=cron, cronexp=0/30 * * * *, wake-system=0, timeout=5, script-path=https://gist.githubusercontent.com/Hyseen/5ae36a6a5cb5690b1f2bff4aa19c766f/raw/youtube_premium_check.js, argument=availableIcon=checkmark.circle&availableIconColor=55ba94&notAvailableIcon=checkmark.circle.trianglebadge.exclamationmark&notAvailableIconColor=#9a9ced&errorIcon=hand.raised.circle&errorIconColor=#ea5532
+#youtube策略组控制
+#应该修改的字段 youtubeGroup
+YouTubeController = type=generic, timeout=3600, script-path=https://raw.githubusercontent.com/vernesong/something/main/YouTubeSelect/youtubecontroller.js, argument=icon1=checkmark.circle&color1=55ba94&icon2=checkmark.circle.trianglebadge.exclamationmark&color2=#9a9ced&icon3=hand.raised.circle&color3=#ea5532&youtubeGroup=YouTube
+YouTubeChecker = type=cron,cronexp=0/30 * * * *,wake-system=0,timeout=3600,script-path=https://raw.githubusercontent.com/vernesong/something/main/YouTubeSelect/youtubechecker.js,script-update-interval=86400,control-api=1
+#捷径执行
+YouTubeShortcut = type=cron,cronexp=5 * 31 1 2000,wake-system=0,timeout=3600,script-path=https://raw.githubusercontent.com/vernesong/something/main/YouTubeSelect/youtubeshortcut.js,script-update-interval=86400,control-api=1
 
 #策略组面板 可重复配置 注意修改相应字段
 #必须更改的字段：group 填写需要显示的策略组名称
