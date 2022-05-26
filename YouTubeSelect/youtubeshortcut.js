@@ -36,20 +36,20 @@
       }
 
       let dataname;
-      var fullUnlock = [];
-      var onlyOriginal = [];
+      var ytfullUnlock = [];
+      var ytnosupport = [];
       var selectFU = []
-      var selectOG = []
+      var selectNO = []
 
 
-      if ($persistentStore.read("FULLUNLOCK") == null || $persistentStore.read("ONLYORIGINAL") == null) {
+      if ($persistentStore.read("YTFULLUNLOCK") == null || $persistentStore.read("YTNOSUPPORT") == null) {
       } else {
         //读取持久化数据
-        fullUnlock = $persistentStore.read("FULLUNLOCK").split(",");
-        onlyOriginal = $persistentStore.read("ONLYORIGINAL").split(",");
+        ytfullUnlock = $persistentStore.read("YTFULLUNLOCK").split(",");
+        ytnosupport = $persistentStore.read("YTNOSUPPORT").split(",");
         //清除空值
-        del(fullUnlock, "")
-        del(onlyOriginal, "")
+        del(ytfullUnlock, "")
+        del(ytnosupport, "")
       }
 
       /* 测试当选策略组节点状态并记录数据 */
@@ -61,10 +61,10 @@
       }
       //去除历史数据
       for (let i = 0; i < selectName.length; ++i) {
-        if (fullUnlock.includes(selectName[i]) == true) {
-          del(fullUnlock, selectName[i])
-        } else if (onlyOriginal.includes(selectName[i]) == true) {
-          del(onlyOriginal, selectName[i])
+        if (ytfullUnlock.includes(selectName[i]) == true) {
+          del(ytfullUnlock, selectName[i])
+        } else if (ytnosupport.includes(selectName[i]) == true) {
+          del(ytnosupport, selectName[i])
         }
       }
 
@@ -94,14 +94,14 @@
         dataname = selectName[i]
         data[dataname] = reg
         if (newStatus === 1) {
-          if (fullUnlock.includes(selectName[i]) == false) {
-            fullUnlock.push(selectName[i])
+          if (ytfullUnlock.includes(selectName[i]) == false) {
+            ytfullUnlock.push(selectName[i])
             selectFU.push(selectName[i])
           }
         } else {
-          if (onlyOriginal.includes(selectName[i]) == false) {
-            onlyOriginal.push(selectName[i])
-            selectOG.push(selectName[i])
+          if (ytnosupport.includes(selectName[i]) == false) {
+            ytnosupport.push(selectName[i])
+            selectNO.push(selectName[i])
           }
         }
         //找到全解锁节点 退出检测
@@ -115,12 +115,12 @@
       //设定选择列表
       var selectList = []
 
-      console.log(selectFU.length + " | " + selectOG.length)
+      console.log(selectFU.length + " | " + selectNO.length)
 
       if (selectFU.length > 0) {
         selectList = selectFU
-      } else if (selectFU.length == 0 && selectOG.length > 0) {
-        selectList = selectOG
+      } else if (selectFU.length == 0 && selectNO.length > 0) {
+        selectList = selectNO
       }
 
       console.log("选择列表:" + selectList.sort())
@@ -130,13 +130,13 @@
 
       // 创建持久化数据
 
-      $persistentStore.write(fullUnlock.toString(), "FULLUNLOCK");
-      $persistentStore.write(onlyOriginal.toString(), "ONLYORIGINAL")
+      $persistentStore.write(ytfullUnlock.toString(), "YTFULLUNLOCK");
+      $persistentStore.write(ytnosupport.toString(), "YTNOSUPPORT")
       $persistentStore.write(JSON.stringify(data), "YTREGIONCODE")
 
       //打印测试结果
-      console.log("全解锁:" + fullUnlock.sort())
-      console.log("未解锁:" + onlyOriginal.sort())
+      console.log("全解锁:" + ytfullUnlock.sort())
+      console.log("未解锁:" + ytnosupport.sort())
     }
 
     //获取根节点名
@@ -166,11 +166,11 @@
       title: `${title}`,
     }
 
-    if (fullUnlock.includes(rootName)) {
+    if (ytfullUnlock.includes(rootName)) {
       panel['content'] = `支持 YouTube Premium  地区：${data[rootName]}`
       panel['icon'] = params.icon1
       panel['icon-color'] = params.color1
-    } else if (onlyOriginal.includes(rootName)) {
+    } else if (ytnosupport.includes(rootName)) {
       panel['content'] = `不支持 YouTube Premium`
       panel['icon'] = params.icon2
       panel['icon-color'] = params.color2
@@ -185,10 +185,6 @@
 
   })();
 
-
-
-
-
 function httpAPI(path = "", method = "GET", body = null) {
   return new Promise((resolve) => {
     $httpAPI(method, path, body, (result) => {
@@ -199,7 +195,7 @@ function httpAPI(path = "", method = "GET", body = null) {
 
 async function testPolicy() {
   try {
-    const regionCode = await Promise.race([test(), timeout(3000)])
+    const regionCode = await Promise.race([test(), timeout(5000)])
     return { status: 1, regionCode }
   } catch (error) {
     if (error === 'Not Available') {
@@ -263,7 +259,7 @@ function timeout(delay = 5000) {
 
 function statusName(status) {
   return status == 1 ? "全解锁"
-      : status == 0 ? "不解锁"
+      : status == 0 ? "未解锁"
         : status == -1 ? "检测失败"
           : "检测超时";
 }
