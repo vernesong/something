@@ -224,7 +224,7 @@ function test() {
         return
       }
 
-      if (data.indexOf('Premium is not available in your country') !== -1) {
+      if (data.indexOf('is not available in your country') !== -1) {
         reject('Not Available')
         return
       }
