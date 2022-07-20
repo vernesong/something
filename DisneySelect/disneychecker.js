@@ -173,9 +173,9 @@ const STATUS_ERROR = -2
 
 async function testDisneyPlus() {
   try {
-    let { region, cnbl } = await Promise.race([testHomePage(), timeout(10000)])
+    let { region, cnbl } = await Promise.race([testHomePage(), timeout(3000)])
 
-    let { countryCode, inSupportedLocation, accessToken } = await Promise.race([getLocationInfo(), timeout(10000)])
+    let { countryCode, inSupportedLocation, accessToken } = await Promise.race([getLocationInfo(), timeout(3000)])
 
     region = countryCode ?? region
     // 即将登陆
@@ -183,7 +183,7 @@ async function testDisneyPlus() {
       return { region, status: STATUS_COMING }
     }
 
-    let support = await Promise.race([testPublicGraphqlAPI(accessToken), timeout(10000)])
+    let support = await Promise.race([testPublicGraphqlAPI(accessToken), timeout(3000)])
     if (!support) {
       return { status: STATUS_NOT_AVAILABLE }
     }
@@ -321,7 +321,7 @@ function testHomePage() {
   })
 }
 
-function timeout(delay = 5000) {
+function timeout(delay = 10000) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       reject('Timeout')
