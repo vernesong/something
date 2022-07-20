@@ -316,7 +316,7 @@ function testHomePage() {
         reject('Error')
         return
       }
-      if (response.status !== 200 || data.indexOf('unavailable') !== -1) {
+      if (response.status !== 200) {
         reject('Not Available')
         return
       }
