@@ -209,7 +209,7 @@ function httpAPI(path = "", method = "GET", body = null) {
 
 async function testPolicy(policyName) {
   try {
-    const regionCode = await Promise.race([testFilm(FILM_ID), timeout(3000)])
+    const regionCode = await Promise.race([testFilm(FILM_ID), timeout(5000)])
     return {
       status: 2,
       regionCode,
@@ -279,7 +279,7 @@ function testFilm(filmId) {
   })
 }
 
-function timeout(delay = 5000) {
+function timeout(delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       reject('Timeout')

@@ -271,7 +271,7 @@ function test() {
   })
 }
 
-function timeout(delay = 5000) {
+function timeout(delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       reject('Timeout')
