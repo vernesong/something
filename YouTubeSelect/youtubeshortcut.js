@@ -156,33 +156,8 @@
     }
 
     $notification.post("YouTube Premium 检测", info, "")
-    
-    /**
-    * 面板显示
-    */
 
-    let title = "YouTube Premium ➟ " + rootName;
-
-    let panel = {
-      title: `${title}`,
-    }
-
-    if (ytfullUnlock.includes(rootName)) {
-      panel['content'] = `支持 YouTube Premium  地区：${data[rootName]}`
-      panel['icon'] = params.icon1
-      panel['icon-color'] = params.color1
-    } else if (ytnosupport.includes(rootName)) {
-      panel['content'] = `不支持 YouTube Premium`
-      panel['icon'] = params.icon2
-      panel['icon-color'] = params.color2
-    } else {
-      console.log("test")
-      panel['content'] = `没有找到可用的节点`
-      panel['icon'] = params.icon3
-      panel['icon-color'] = params.color3
-    }
-
-    $done(panel)
+    $done();
 
   })();
 

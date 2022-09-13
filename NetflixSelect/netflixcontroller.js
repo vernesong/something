@@ -194,7 +194,7 @@ let params = getParams($argument)
   }
 
 
-  $done(panel)
+  $done(panel);
 
 
 })();

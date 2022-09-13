@@ -40,7 +40,6 @@ const STATUS_ERROR = -2
     }
     if (newStatus === 1) {
       console.log("当前节点仍可用 退出检测");
-      $done();
     } else {
 
       var regData
@@ -157,32 +156,7 @@ const STATUS_ERROR = -2
 
     $notification.post("Disney检测", info, "")
     
-    /**
-    * 面板显示
-    */
-
-    let title = "Disney+ ➟ " + rootName;
-
-    let panel = {
-      title: `${title}`,
-    }
-    if (statusData[rootName] == 1) {
-      panel['content'] = `支持Disney+，区域：${regData[rootName]}`
-      panel['icon'] = params.icon1
-      panel['icon-color'] = params.color1
-    } else if (statusData[rootName] == 2) {
-      panel['content'] = `即将登陆 敬请期待`
-      panel['icon'] = params.icon2
-      panel['icon-color'] = params.color2
-    } else {
-      $surge.setSelectGroupPolicy(disneyGroup, first);
-      panel['content'] = `没有找到可用的节点`
-      panel['icon'] = params.icon3
-      panel['icon-color'] = params.color3
-    }
-
-
-    $done(panel)
+    $done();
 
   })()
 

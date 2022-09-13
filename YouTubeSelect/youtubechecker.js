@@ -18,7 +18,6 @@
     }
     if (newStatus === 2) {
       console.log("当前节点仍可用 退出检测");
-      $done();
     } else {
 
 
@@ -136,41 +135,9 @@
       //打印测试结果
       console.log("全解锁:" + ytfullUnlock.sort())
       console.log("未解锁:" + ytnosupport.sort())
-      
-      /* 刷新信息 */
-      //获取根节点名
-      let rootName = (await httpAPI("/v1/policy_groups/select?group_name=" + encodeURIComponent(youtubeGroup) + "")).policy;
-      while (allGroup.includes(rootName) == true) {
-        rootName = (await httpAPI("/v1/policy_groups/select?group_name=" + encodeURIComponent(rootName) + "")).policy;
-      }
-
-      /**
-      * 面板显示
-      */
-
-      let title = "YouTube Premium ➟ " + rootName;
-
-      let panel = {
-        title: `${title}`,
-      }
-
-      if (ytfullUnlock.includes(rootName)) {
-        panel['content'] = `支持 YouTube Premium  地区：${data[rootName]}`
-        panel['icon'] = params.icon1
-        panel['icon-color'] = params.color1
-      } else if (ytnosupport.includes(rootName)) {
-        panel['content'] = `不支持 YouTube Premium`
-        panel['icon'] = params.icon2
-        panel['icon-color'] = params.color2
-      } else {
-        console.log("test")
-        panel['content'] = `没有找到可用的节点`
-        panel['icon'] = params.icon3
-        panel['icon-color'] = params.color3
-      }
     }
 
-    $done(panel)
+    $done();
 
   })();
 
