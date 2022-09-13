@@ -204,7 +204,7 @@ function httpAPI(path = "", method = "GET", body = null) {
 
 async function testPolicy() {
   try {
-    const regionCode = await Promise.race([testFilm(FILM_ID), timeout(5000)])
+    const regionCode = await Promise.race([testFilm(FILM_ID), timeout(10000)])
     return { status: 2, regionCode }
   } catch (error) {
     if (error === 'Not Found') {

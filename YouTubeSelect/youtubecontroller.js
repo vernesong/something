@@ -207,7 +207,7 @@ function httpAPI(path = "", method = "GET", body = null) {
 
 async function testPolicy(policyName) {
   try {
-    const regionCode = await Promise.race([test(), timeout(5000)])
+    const regionCode = await Promise.race([test(), timeout(10000)])
     return {
       status: 1,
       regionCode,
