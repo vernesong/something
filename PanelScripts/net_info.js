@@ -20,20 +20,22 @@ $httpClient.get('http://ip-api.com/json/?lang=en', function (error, response, da
       $done();
     }
     
-    const jsonData = JSON.parse(data);
-    if(jsonData?.errors){
-      $done();
+    if (JSON.parse(data)) {
+      const jsonData = JSON.parse(data);
+      if(jsonData?.errors || jsonData?.status == "fail"){
+        $done();
+      }
+      $done({
+        title:rootName,
+        content:
+      `国家地区: ${jsonData.country} - ${jsonData.city}\n`+
+        `运营商 : ${jsonData.isp}\n` +
+      `数据中心: ${jsonData.org}`,
+        icon: params.icon,
+        "icon-color":params.color
+      });
     }
-
-    $done({
-      title:rootName,
-      content:
-		`国家地区: ${jsonData.country} - ${jsonData.city}\n`+
-      `运营商 : ${jsonData.isp}\n` +
-		`数据中心: ${jsonData.org}`,
-      icon: params.icon,
-		  "icon-color":params.color
-    });
+    $done();
   });
 
 })();
