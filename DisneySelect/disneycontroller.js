@@ -285,6 +285,14 @@ function getLocationInfo() {
       }
 
       if (response.status !== 200) {
+        console.log('getLocationInfo: ' + data)
+        reject('Not Available')
+        return
+      }
+
+      data = JSON.parse(data)
+      if(data?.errors){
+        console.log('getLocationInfo: ' + data)
         reject('Not Available')
         return
       }
@@ -295,7 +303,7 @@ function getLocationInfo() {
           inSupportedLocation,
           location: { countryCode },
         },
-      } = JSON.parse(data)?.extensions?.sdk
+      } = data?.extensions?.sdk
       resolve({ inSupportedLocation, countryCode, accessToken })
     })
   })
