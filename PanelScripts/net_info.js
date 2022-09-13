@@ -17,13 +17,13 @@ while(allGroup.includes(rootName)==true){
 
 $httpClient.get('http://ip-api.com/json/?lang=en', function (error, response, data) {
     if (error != null || response.status !== 200) {
-      $done();
+      return
     }
     
     if (JSON.parse(data)) {
       const jsonData = JSON.parse(data);
       if(jsonData?.errors || jsonData?.status == "fail"){
-        $done();
+        return
       }
       $done({
         title:rootName,
@@ -35,7 +35,6 @@ $httpClient.get('http://ip-api.com/json/?lang=en', function (error, response, da
         "icon-color":params.color
       });
     }
-    $done();
   });
 
 })();
