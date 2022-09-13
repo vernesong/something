@@ -17,14 +17,12 @@ while(allGroup.includes(rootName)==true){
 
 $httpClient.get('http://ip-api.com/json/?lang=en', function (error, response, data) {
     if (error != null || response.status !== 200) {
-      reject('Error')
-      return
+      $done();
     }
     
     const jsonData = JSON.parse(data);
     if(jsonData?.errors){
-      reject('Not Available')
-      return
+      $done();
     }
 
     $done({
