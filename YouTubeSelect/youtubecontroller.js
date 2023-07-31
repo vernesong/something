@@ -234,7 +234,7 @@ async function testPolicy(policyName) {
 function test() {
   return new Promise((resolve, reject) => {
     let option = {
-      url: `https://www.youtube.com/premium`,
+      url: `https://m.youtube.com/premium`,
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36',
         'Accept-Language': 'en',
