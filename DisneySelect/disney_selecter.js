@@ -106,7 +106,7 @@ await timeout(1000).catch(() => {})
 /* 检查选择列表 */
 console.log(select.length)
 if(select.length==0){
-	$notification.post("节点列表获取失败", "请手动运行一次DisneyChecker脚本", "")
+	$notification.post("Disney检测", "", "节点列表获取失败，请手动运行一次DisneyChecker脚本")
 }
 //测试当前选择
 

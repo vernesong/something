@@ -155,7 +155,7 @@
       info = "该策略组暂无可用的节点"
     }
 
-    $notification.post("YouTube Premium 检测", info, "")
+    $notification.post("YouTube Premium 检测", "", info)
 
     $done();
 
