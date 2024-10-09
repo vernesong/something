@@ -26,7 +26,6 @@
     }
     if (newStatus === 1) {
       console.log("当前节点仍可用 退出检测");
-      $done();
     } else {
 
       var data

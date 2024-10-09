@@ -30,7 +30,6 @@ const AREA_TEST_FILM_ID = 80018499
     }
     if (newStatus === 2) {
       console.log("当前节点仍可用 退出检测");
-      $done();
     } else {
 
       var data
